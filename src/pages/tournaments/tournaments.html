@@ -12,8 +12,6 @@
 
 <ion-content >
 	<ion-list>
-		<ion-item full outline (click)="itemTapped()">Taco League</ion-item>
-		<ion-item full outline (click)="itemTapped()">Nats League</ion-item>
-		<ion-item full outline (click)="itemTapped()">IVA League</ion-item>
+		<ion-item full outline *ngFor="let tournament of tournaments"(click)="itemTapped($event, tournament)">{{tournament.name}}</ion-item>
 	</ion-list>
 </ion-content>

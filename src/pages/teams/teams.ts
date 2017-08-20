@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { TeamHomePage } from '../pages';
+import { SportsologyApi} from '../../shared/shared'
 /**
  * Generated class for the TeamsPage page.
  *
@@ -15,15 +16,9 @@ import { TeamHomePage } from '../pages';
 	templateUrl: 'teams.html',
 })
 export class TeamsPage {
+	teams = [];
 
-  
-	teams = [
-		{id: 1, name: 'Elite VB Group'},
-		{id: 2, name: 'Hilliard Hitters'},
-		{id: 3, name: 'Dublin Spikers'}
-	];
-
-	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor(public navCtrl: NavController, public navParams: NavParams,  private SportsologyApi: SportsologyApi) {
 	
 	}
 
@@ -32,7 +27,11 @@ export class TeamsPage {
 	}
 
 	ionViewDidLoad() {
-		console.log('ionViewDidLoad TeamsPage');
+		let selectedTournament = this.navParams.data;
+
+		this.SportsologyApi.getTournamentData(selectedTournament.id).subscribe(data => {
+			this.teams = data.teams;
+		});
 	}
 
 }
