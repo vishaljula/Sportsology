@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { TeamHomePage } from '../pages';
-import { SportsologyApi} from '../../shared/shared'
+import { SportsologyApi } from '../../shared/shared'
 /**
  * Generated class for the TeamsPage page.
  *

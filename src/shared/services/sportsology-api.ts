@@ -26,4 +26,8 @@ export class SportsologyApi {
 				   		return this.currentTournament;
 				   });
 	}
+
+	getCurrentTournament() {
+		return this.currentTournament;
+	}
 }

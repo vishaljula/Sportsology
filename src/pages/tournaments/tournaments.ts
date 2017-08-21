@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import { TeamsPage } from '../pages';
 import { SportsologyApi} from '../../shared/shared'
@@ -19,7 +19,12 @@ export class TournamentsPage {
 
   tournaments: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private SportsologyApi: SportsologyApi) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private SportsologyApi: SportsologyApi,
+    private loadingController: LoadingController
+    ) {
   }
 
   itemTapped($event, tourney) {
@@ -27,7 +32,17 @@ export class TournamentsPage {
   }
 
   ionViewDidLoad() {
-    this.SportsologyApi.getTournaments().then(data => this.tournaments = data);
+    let loader = this.loadingController.create({
+      content: 'Getting tournaments',
+      spinner: 'bubbles'
+    });
+
+    loader.present().then(() => {
+        this.SportsologyApi.getTournaments().then(data => {
+          this.tournaments = data
+          loader.dismiss();
+        });
+    });
     console.log('ionViewDidLoad TournamentsPage');
   }
 

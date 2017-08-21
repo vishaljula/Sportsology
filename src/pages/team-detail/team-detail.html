@@ -6,12 +6,21 @@
 -->
 <ion-header>
 
-  <ion-navbar color="primary"></ion-navbar>
+  <ion-navbar color="primary">
+  	
+  </ion-navbar>
 
 </ion-header>
 
-
-<ion-content padding>
-	<h2>Team Detail</h2>
-	<h3>{{team.name}}</h3>
+<ion-content >
+	<ion-list>
+		<ion-item 
+			full 
+			outline 
+			*ngFor="let game of games" 
+			(click)="gameClicked($event, game)"
+		>
+			{{game.opponent}}
+		</ion-item>
+	</ion-list>
 </ion-content>
