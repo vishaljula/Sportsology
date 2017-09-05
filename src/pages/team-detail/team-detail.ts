@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import { SportsologyApi } from '../../shared/shared';
 import { GamePage } from '../pages';
 /**
@@ -17,9 +18,13 @@ import { GamePage } from '../pages';
   templateUrl: 'team-detail.html',
 })
 export class TeamDetailPage {
+	allGames: any[];
+	dateFilter: string;
 	games: any[];
 	team: any;
+	teamStanding: any;
 	private tournamentData: any;
+	useDateFilter: boolean = false;
 
 	constructor(
 		public navCtrl: NavController, 
@@ -60,6 +65,8 @@ export class TeamDetailPage {
 					  	};
 					  })
 					  .value();
+		this.allGames = this.games;
+		this.teamStanding = _.find(this.tournamentData.standings, {'teamId': this.team.id});
 		console.log('ionViewDidLoad TeamDetailPage');
 	}
 
@@ -68,4 +75,12 @@ export class TeamDetailPage {
 		this.navCtrl.parent.parent.push(GamePage, sourceGame);
 	}
 
+	dateChanged() {
+		if(this.useDateFilter) {
+			this.games = _.filter(this.allGames, g => moment(g.time).isSame(this.dateFilter, 'day'));
+		}
+		else {
+			this.games = this.allGames;
+		}
+	}
 }

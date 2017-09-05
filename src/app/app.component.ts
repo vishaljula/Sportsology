@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Geolocation } from '@ionic-native/geolocation';
 import { HttpModule } from '@angular/http';
 
 import { MyTeamsPage, TournamentsPage } from '../pages/pages';
@@ -12,7 +13,8 @@ import { SportsologyApi } from '../shared/shared';
   templateUrl: 'app.html',
   providers: [
     SportsologyApi,
-    HttpModule
+    HttpModule,
+    Geolocation
   ]
 })
 export class MyApp {
@@ -20,7 +22,11 @@ export class MyApp {
 
   rootPage: any = MyTeamsPage;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(
+      public platform: Platform, 
+      public statusBar: StatusBar, 
+      public splashScreen: SplashScreen,
+      public geolocation: Geolocation) {
     this.initializeApp();
   }
 
@@ -30,6 +36,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      console.log(this.geolocation);
     });
   }
 

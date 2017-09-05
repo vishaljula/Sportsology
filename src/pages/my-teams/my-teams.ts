@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
-import { TournamentsPage } from '../tournaments/tournaments';
+import { TournamentsPage, TeamHomePage } from '../pages';
+import { SportsologyApi } from '../../shared/shared';
 
 /**
  * Generated class for the MyTeamsPage page.
@@ -17,11 +18,38 @@ import { TournamentsPage } from '../tournaments/tournaments';
 })
 export class MyTeamsPage {
 
-  constructor(private navCtrl: NavController, public navParams: NavParams) {
+  favorites = [
+    {
+      team: {id: 97845, name: 'hvbv', coach: 'whkvhce'},
+      tournamentId: '4332h-42343n-3432mn-343nk',
+      tournamentName: 'some tourney'
+    },
+    {
+      team: {id: 97845, name: 'hvbv', coach: 'whkvhce'},
+      tournamentId: '4332h-42343n-3432mn-343nk',
+      tournamentName: 'some tourney'
+    }
+  ];
+
+  constructor(
+    private navCtrl: NavController, 
+    public navParams: NavParams,
+    private SportsologyApi: SportsologyApi,
+    private loadingController: LoadingController) {
   }
 
-  goToTournament() {
+  goToTournaments() {
   	this.navCtrl.push(TournamentsPage);
+  }
+
+  favoriteTapped($event, favorite) {
+    let loader = this.loadingController.create({
+      content: 'Getting Data...',
+      dismissOnPageChange: true
+    });
+    loader.present();
+    this.SportsologyApi.getTournamentData(favorite.tournamentId)
+        .subscribe(t => this.navCtrl.push(TeamHomePage, favorite.team));
   }
 
   ionViewDidLoad() {

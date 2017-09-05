@@ -12,6 +12,6 @@
 
 <ion-content >
 	<ion-list>
-		<ion-item full outline *ngFor="let tournament of tournaments"(click)="itemTapped($event, tournament)">{{tournament.name}}</ion-item>
+		<button ion-item full outline *ngFor="let tournament of tournaments"(click)="itemTapped($event, tournament)">{{tournament.name}}</button>
 	</ion-list>
 </ion-content>
